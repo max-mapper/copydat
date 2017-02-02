@@ -24,5 +24,16 @@
   "devDependencies": {
     "pretty-bytes": "^4.0.2",
     "speedometer": "^1.0.0"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxogden/copydat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maxogden/copydat/issues"
+  },
+  "homepage": "https://github.com/maxogden/copydat#readme"
 }
