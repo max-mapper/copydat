@@ -1,0 +1,28 @@
+{
+  "name": "copydat",
+  "version": "1.0.0",
+  "description": "fast encrypted file copy between two machines using a dat key",
+  "main": "index.js",
+  "bin": {
+    "copydat": "cli.js"
+  },
+  "keywords": [],
+  "author": "max ogden",
+  "license": "ISC",
+  "dependencies": {
+    "datland-swarm-defaults": "^1.0.2",
+    "discovery-swarm": "^4.2.0",
+    "increment-buffer": "^1.0.1",
+    "length-prefixed-message": "^3.0.3",
+    "length-prefixed-stream": "^1.5.1",
+    "pump": "^1.0.2",
+    "sodium-native": "^1.3.2",
+    "tar-fs": "^1.15.0",
+    "through2": "^2.0.3",
+    "varint": "^5.0.0"
+  },
+  "devDependencies": {
+    "pretty-bytes": "^4.0.2",
+    "speedometer": "^1.0.0"
+  }
+}
