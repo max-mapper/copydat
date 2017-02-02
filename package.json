@@ -1,6 +1,6 @@
 {
   "name": "copydat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "fast encrypted file copy between two machines using a dat key",
   "main": "index.js",
   "bin": {
