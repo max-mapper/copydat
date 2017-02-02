@@ -4,7 +4,7 @@ var net = require('net')
 var server = require('./')
 var client = require('./client')
 var crypto = require('crypto')
-var speedo = require('speedometer')
+// var speedo = require('speedometer')
 var pb = require('pretty-bytes')
 
 
