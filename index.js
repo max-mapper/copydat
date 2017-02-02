@@ -16,29 +16,26 @@ module.exports = function (key, dir) { // symmetric key
   var discovery = crypto.createHmac('sha256', 'tardat').update(key).digest()
   sw.join(discovery)
   sw.on('connection', onSocket)
-  
+
   function onSocket (sock) {
-    console.log('on socket')
-    
     var nonce = crypto.randomBytes(sodium.crypto_secretbox_NONCEBYTES)
     sock.write(num2varint(nonce.length))
     sock.write(nonce)
     var rs = tar.pack(dir)
+
     var encrypt = through(function (obj, enc, next) {
       var mac = new Buffer(sodium.crypto_secretbox_MACBYTES)
       var lenint = num2varint(obj.length + mac.length)
-      sodium.crypto_secretbox_detached(obj, mac, obj, nonce, key) // in place encryption
+      var newBuf = new Buffer(obj.length) // causes tar header corruption if not used???
+      sodium.crypto_secretbox_detached(newBuf, mac, obj, nonce, key) // in place encryption
       increment(nonce) // security
       this.push(lenint)
-      this.push(obj)
+      this.push(newBuf)
       this.push(mac)
       next()
     })
-    pump(rs, through(function (obj, enc, next) {
-      console.log(obj.length)
-      next(null, obj)
-    }), encrypt, sock, function (err) {
-      if (err) throw err
+    pump(rs, encrypt, sock, function (err) {
+      if (err) return console.error(err)
       console.log('Done')
       sw.destroy()
     })

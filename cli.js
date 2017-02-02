@@ -7,13 +7,13 @@ var crypto = require('crypto')
 var speedo = require('speedometer')
 var pb = require('pretty-bytes')
 
-var key = process.argv[2]
-var file = process.argv[3]
 
-if (file) {
-  server(key, file)
+if (process.argv[3]) {
+  client(process.argv[2], process.argv[3])
 } else {
-  client(key, './')
+  var newKey = crypto.randomBytes(32).toString('hex')
+  console.log(newKey)
+  server(newKey, process.argv[2])
 }
 
 // client.on('data', function (ch) {

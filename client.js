@@ -18,10 +18,12 @@ module.exports = function (key, out) {
   var discovery = crypto.createHmac('sha256', 'tardat').update(key).digest()
   sw.join(discovery)
   sw.on('connection', onSocket)
+  var hasSocket = false
 
   function onSocket (sock) {
-    console.log('on socket')
     lpm.read(sock, function (nonce) {
+      if (hasSocket) return sock.destroy()
+      hasSocket = true
       var decode = lps.decode()
       var decrypt = through(function (obj, enc, next) {
         var macStart = obj.length - sodium.crypto_secretbox_MACBYTES
@@ -35,11 +37,8 @@ module.exports = function (key, out) {
       
       var write = tar.extract(out)
       
-      pump(sock, decode, decrypt, through(function (obj, enc, next) {
-        console.log(obj.length)
-        next(null, obj)
-      }), write, function (err) {
-        if (err) throw err
+      pump(sock, decode, decrypt, write, function (err) {
+        if (err) return console.error(err)
         console.log('Done')
         sw.destroy()
       })
