@@ -5,7 +5,7 @@ var server = require('./')
 var client = require('./client')
 var crypto = require('crypto')
 // var speedo = require('speedometer')
-var pb = require('pretty-bytes')
+// var pb = require('pretty-bytes')
 
 
 if (process.argv[3]) {
